@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAI-BOT | لوحة التحكم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            user-select: none;
+        }
+        body {
+            background-color: #131520;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+        .header {
+            background-color: #1a1d2d;
+            padding: 15px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #262a40;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .avatar {
+            width: 42px;
+            height: 42px;
+            background-color: #25293e;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 18px;
+            color: #fff;
+            border: 1px solid #323752;
+        }
+        .bot-info h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #f1f5f9;
+        }
+        .bot-info p {
+            font-size: 11px;
+            color: #64748b;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .status-badge {
+            background-color: #222639;
+            border: 1px solid #2f344d;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #ef4444;
+            font-weight: 700;
+        }
+        .status-badge.online {
+            color: #10b981;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: currentColor;
+        }
+        .logout-btn {
+            background-color: #222639;
+            border: 1px solid #2f344d;
+            color: #94a3b8;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            padding: 18px;
+        }
+        .card {
+            background-color: #1c2030;
+            border: 1px solid #282d42;
+            border-radius: 16px;
+            padding: 20px 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .card-icon {
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+        .card-value {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+        .card-label {
+            font-size: 12px;
+            color: #7c859e;
+            font-weight: 500;
+        }
+        .c-green { color: #22c55e; }
+        .c-blue { color: #3b82f6; }
+        .c-yellow { color: #eab308; }
+        .c-purple { color: #a855f7; }
+        .c-orange { color: #f97316; }
+        .c-cyan { color: #06b6d4; }
+        .c-pink { color: #ec4899; }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #181b28;
+            border-top: 1px solid #262a40;
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 5px;
+            z-index: 100;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #64748b;
+            font-size: 11px;
+            padding: 6px 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            gap: 4px;
+        }
+        .nav-item.active {
+            background-color: #23283d;
+            color: #3b82f6;
+            font-weight: 700;
+        }
+        .nav-icon {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="header-right">
+            <div class="avatar">K</div>
+            <div class="bot-info">
+                <h3 id="bot-name">KAI-BOT</h3>
+                <p id="sub-status">جاري التحميل...</p>
+            </div>
+        </div>
+        <div class="header-left">
+            <div class="status-badge" id="status-badge">
+                <span class="dot"></span>
+                <span id="status-text">غير متصل</span>
+            </div>
+            <button class="logout-btn" onclick="alert('تم تسجيل الخروج')">خروج</button>
+        </div>
+    </div>
+
+    <div class="grid-container">
+        <div class="card">
+            <div class="card-icon">⚡</div>
+            <div class="card-value c-green" id="cmd-used">0</div>
+            <div class="card-label">أوامر</div>
+        </div>
+        <div class="card">
+            <div class="card-icon">💬</div>
+            <div class="card-value c-blue" id="msg-count">0</div>
+            <div class="card-label">رسائل</div>
+        </div>
+        <div class="card">
+            <div class="card-icon">👤</div>
+            <div class="card-value c-yellow" id="users-count">0</div>
+            <div class="card-label">مستخدمون</div>
+        </div>
+        <div class="card">
+            <div class="card-icon">👥</div>
+            <div class="card-value c-purple" id="groups-count">0</div>
+            <div class="card-label">غروبات</div>
+        </div>
+        <div class="card">
+            <div class="card-icon">📦</div>
+            <div class="card-value c-orange" id="total-cmds">15</div>
+            <div class="card-label">عدد الأوامر</div>
+        </div>
+        <div class="card">
+            <div class="card-icon">⏱️</div>
+            <div class="card-value c-cyan" id="uptime">—</div>
+            <div class="card-label">وقت التشغيل</div>
+        </div>
+        <div class="card">
+            <div class="card-icon">💾</div>
+            <div class="card-value c-pink" id="ram-usage">—</div>
+            <div class="card-label">RAM (MB)</div>
+        </div>
+        <div class="card">
+            <div class="card-icon">🛡️</div>
+            <div class="card-value c-cyan" id="security-layers">20</div>
+            <div class="card-label">طبقات الحماية</div>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <div class="nav-item active">
+            <span class="nav-icon">🏠</span>
+            <span>الرئيسية</span>
+        </div>
+        <div class="nav-item">
+            <span class="nav-icon">💬</span>
+            <span>مسنجر</span>
+        </div>
+        <div class="nav-item">
+            <span class="nav-icon">📦</span>
+            <span>أوامر</span>
+        </div>
+        <div class="nav-item">
+            <span class="nav-icon">🎛️</span>
+            <span>تفعيل</span>
+        </div>
+        <div class="nav-item">
+            <span class="nav-icon">✏️</span>
+            <span>محرر</span>
+        </div>
+        <div class="nav-item">
+            <span class="nav-icon">🛡️</span>
+            <span>حماية</span>
+        </div>
+    </div>
+
+</body>
+</html>
